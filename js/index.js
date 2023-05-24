@@ -1,5 +1,6 @@
 ol.proj.useGeographic();
 var map;
+var vet = new Array('Chicago', 'Pechino', 'Napoli','Foggia','Tokio','Catanzaro','Atlanta','Toronto','Houston','Padova');
 
 window.onload = async function(){
     let busta = await fetch("https://nominatim.openstreetmap.org/search?format=json&city=Fossano");
@@ -29,6 +30,16 @@ window.onload = async function(){
         console.log(event.coordinate);
         createMarker(layer1,"neger", event.coordinate[0], event.coordinate[1]);
     });
+
+    for(let i=0;i<bustaJSON.length;i++){
+        let busta = await fetch("https://nominatim.openstreetmap.org/search?format=json&city="+vet[i]);
+        let bustaJSON = await busta.json();
+        console.log(bustaJSON[0]);
+
+        let coords = [parseFloat(bustaJSON[0].lon), parseFloat(bustaJSON[0].lat)];
+        let layer1 = createLayer(map, "../img/marker3.png");
+        createMarker(layer1,"zemel", coords[0], coords[1]);
+    }
 }
 
 function createLayer(map, pathImg) {
